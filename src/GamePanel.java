@@ -30,6 +30,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		regularFont = new Font("Arial", Font.PLAIN, 30);
 		frameDraw = new Timer(1000/60,this);
 		frameDraw.start();
+		if (needImage) {
+		    loadImage ("space.png");
+		}
+
 	}
 	
 	void updateMenuState() {  
@@ -54,7 +58,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 	void drawGameState(Graphics g) {  
 		 if (gotImage) {
-	        	
+	        g.drawImage(image, 0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT, null);	
 	        }
 		else {
 			g.setColor(Color.BLACK);
