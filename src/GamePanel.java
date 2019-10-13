@@ -5,9 +5,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
 
 import javax.swing.Timer;
-
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 public class GamePanel extends JPanel implements ActionListener, KeyListener {
@@ -20,6 +21,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	Font regularFont;
 	Timer frameDraw;
 	Rocketship rocket = new Rocketship(250, 700, 50, 50);
+	public static BufferedImage image;
+	public static boolean needImage = true;
+	public static boolean gotImage = false;	
 	
 	public GamePanel() {
 		titleFont = new Font("Arial", Font.PLAIN, 48);
@@ -49,9 +53,14 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		g.drawString("Press SPACE for instructions", 50, 515);
 	}
 	void drawGameState(Graphics g) {  
-		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT); 
-		rocket.draw(g);
+		 if (gotImage) {
+	        	
+	        }
+		else {
+			g.setColor(Color.BLACK);
+			g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT); 
+			rocket.draw(g);
+		}
 	}
 	void drawEndState(Graphics g)  {  
 		g.setColor(Color.RED);
@@ -134,6 +143,18 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		    }
 		    rocket.right();
 		}
+	}
+	
+	void loadImage(String imageFile) {
+	    if (needImage) {
+	        try {
+	            image = ImageIO.read(this.getClass().getResourceAsStream(imageFile));
+		    gotImage = true;
+	        } catch (Exception e) {
+	            
+	        }
+	        needImage = false;
+	    }
 	}
 
 	@Override
