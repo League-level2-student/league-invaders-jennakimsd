@@ -24,6 +24,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	public static BufferedImage image;
 	public static boolean needImage = true;
 	public static boolean gotImage = false;	
+	ObjectManager object = new ObjectManager(rocket);
 	
 	public GamePanel() {
 		titleFont = new Font("Arial", Font.PLAIN, 48);
@@ -40,7 +41,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		
 	}
 	void updateGameState() {  
-		
+		object.update();
 	}
 	void updateEndState()  {  
 		
@@ -63,7 +64,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		else {
 			g.setColor(Color.BLACK);
 			g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT); 
-			rocket.draw(g);
+			object.draw(g);
 		}
 	}
 	void drawEndState(Graphics g)  {  

@@ -52,5 +52,11 @@ public class ObjectManager {
 				aliens.remove(i);
 			}
 		}
+		
+		for(int i=0; i<projectiles.size(); i++) {
+			if(projectiles.get(i).isActive ==false) {
+				projectiles.remove(i);
+			}
+		}
 	}
 }
