@@ -24,7 +24,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	public static BufferedImage image;
 	public static boolean needImage = true;
 	public static boolean gotImage = false;	
-	ObjectManager object = new ObjectManager(rocket);
+	ObjectManager objectManager = new ObjectManager(rocket);
+	Timer alienSpawn;
 	
 	public GamePanel() {
 		titleFont = new Font("Arial", Font.PLAIN, 48);
@@ -41,7 +42,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		
 	}
 	void updateGameState() {  
-		object.update();
+		objectManager.update();
 	}
 	void updateEndState()  {  
 		
@@ -64,8 +65,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		else {
 			g.setColor(Color.BLACK);
 			g.fillRect(0, 0, LeagueInvaders.WIDTH, LeagueInvaders.HEIGHT); 
-			object.draw(g);
 		}
+		 objectManager.draw(g);
 	}
 	void drawEndState(Graphics g)  {  
 		g.setColor(Color.RED);
@@ -118,35 +119,40 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		        currentState = MENU;
 		    } else {
 		        currentState++;
+		        if(currentState==GAME) {
+		        	startGame();
+		        }
+		        if(currentState==END) {
+		        	alienSpawn.stop();
+		        }
 		    }
 		}  
 		if (e.getKeyCode()==KeyEvent.VK_UP) {
-		    System.out.println("UP");
 		    if(rocket.y<=0) {
 		    	rocket.y=0;
 		    }
 		    rocket.up();
 		}
 		if (e.getKeyCode()==KeyEvent.VK_DOWN) {
-		    System.out.println("DOWN");
 		    if(rocket.y + rocket.height >=LeagueInvaders.HEIGHT) {
 		    	rocket.y=LeagueInvaders.HEIGHT - rocket.height;
 		    }
 		    rocket.down();
 		}
 		if (e.getKeyCode()==KeyEvent.VK_LEFT) {
-		    System.out.println("LEFT");
 		    if(rocket.x<=0) {
 		    	rocket.x=0;
 		    }
 		    rocket.left();
 		}
 		if (e.getKeyCode()==KeyEvent.VK_RIGHT) {
-		    System.out.println("RIGHT");
 		    if(rocket.x + rocket.width>=LeagueInvaders.WIDTH) {
 		    	rocket.x=LeagueInvaders.WIDTH -rocket.width;
 		    }
 		    rocket.right();
+		}
+		if(e.getKeyCode()==KeyEvent.VK_SPACE) {
+			objectManager.addProjectile(rocket.getProjectile());
 		}
 	}
 	
@@ -166,5 +172,10 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	void startGame(){
+		alienSpawn= new Timer(1000,objectManager);
+		alienSpawn.start();
 	}
 }
