@@ -9,6 +9,7 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.Timer;
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class GamePanel extends JPanel implements ActionListener, KeyListener {
@@ -43,6 +44,9 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 	void updateGameState() {  
 		objectManager.update();
+		if(rocket.isActive==false) {
+			currentState=END;
+		}
 	}
 	void updateEndState()  {  
 		
@@ -75,7 +79,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		g.setColor(Color.YELLOW);
 		g.drawString("Game Over", 120, 100);
 		g.setFont(regularFont);
-		g.drawString("You killed " + " enemies", 110, 345);
+		g.drawString("You killed " + objectManager.getScore() + " enemies", 110, 345);
 		g.drawString("Press ENTER to restart", 80, 515);
 	}
 	
@@ -117,6 +121,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		if (e.getKeyCode()==KeyEvent.VK_ENTER) {
 		    if (currentState == END) {
 		        currentState = MENU;
+		        rocket = new Rocketship(250, 700, 50, 50);
+		        objectManager = new ObjectManager(rocket);
 		    } else {
 		        currentState++;
 		        if(currentState==GAME) {
@@ -152,7 +158,12 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		    rocket.right();
 		}
 		if(e.getKeyCode()==KeyEvent.VK_SPACE) {
+			if(currentState==MENU) {
+				JOptionPane.showMessageDialog(null, "use the up, down, left, and right buttons to move your rocketship. use the space bar to shoot the aliens. try not to get hit by the alien");
+			}
+			if(currentState==GAME) {
 			objectManager.addProjectile(rocket.getProjectile());
+			}
 		}
 	}
 	
