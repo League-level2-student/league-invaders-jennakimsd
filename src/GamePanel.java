@@ -159,7 +159,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
 		}
 		if(e.getKeyCode()==KeyEvent.VK_SPACE) {
 			if(currentState==MENU) {
-				JOptionPane.showMessageDialog(null, "use the up, down, left, and right buttons to move your rocketship. use the space bar to shoot the aliens. try not to get hit by the alien");
+				JOptionPane.showMessageDialog(null, "use the up, down, left, and right buttons to move your rocketship. use the space bar to shoot the aliens in order to not get hit");
 			}
 			if(currentState==GAME) {
 			objectManager.addProjectile(rocket.getProjectile());

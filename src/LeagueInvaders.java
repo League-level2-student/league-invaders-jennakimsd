@@ -11,8 +11,8 @@ public class LeagueInvaders {
 	}
 	
 	public static void main(String[] args) {
-		LeagueInvaders object = new LeagueInvaders();
-		object.setup();
+		LeagueInvaders league = new LeagueInvaders();
+		league.setup();
 	}
 	void setup() {
 		frame.add(panel);
